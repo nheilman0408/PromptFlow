@@ -1,0 +1,69 @@
+inputs:
+  chat_history:
+    type: list
+    is_chat_input: false
+    is_chat_history: true
+  question:
+    type: string
+    is_chat_input: true
+  loan_id:
+    type: int
+    is_chat_input: false
+  customer_name:
+    type: string
+    is_chat_input: false
+outputs:
+  answer:
+    type: string
+    reference: ${chat.output}
+    evaluation_only: false
+    is_chat_output: true
+nodes:
+- name: loan_lookup
+  type: python
+  source:
+    type: code
+    path: loan_lookup.py
+  inputs:
+    loan_id: "${inputs.loan_id}"
+  aggregation: false
+- name: customer_lookup
+  type: python
+  source:
+    type: code
+    path: customer_lookup.py
+  inputs:
+    conn: "cosmos_conn"
+    customer_name: "${inputs.customer_name}"
+  aggregation: false
+- name: bank_prompt
+  type: prompt
+  source:
+    type: code
+    path: bank_prompt.jinja2
+  inputs:
+    customerresponse: "${customer_lookup.output}"
+    history: "${inputs.chat_history}"
+    loanresponse: "${loan_lookup.output}"
+  aggregation: false
+- name: chat
+  type: llm
+  source:
+    type: code
+    path: chat__variant_1.jinja2
+  inputs:
+    deployment_name: "nh-gpt4-32k"
+    temperature: 0.7
+    top_p: 1
+    max_tokens: 256
+    presence_penalty: 0
+    frequency_penalty: 0
+    prompt_text: "${bank_prompt.output}"
+    question: "${inputs.question}"
+  api: chat
+  provider: AzureOpenAI
+  connection: NH AOAI Canada
+  module: promptflow.tools.aoai
+  aggregation: false
+environment:
+  python_requirements_txt: requirements.txt

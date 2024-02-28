@@ -1,0 +1,116 @@
+id: template_chat_flow
+name: Template Chat Flow
+inputs:
+  chat_history:
+    type: list
+    is_chat_input: false
+    is_chat_history: true
+  question:
+    type: string
+    is_chat_input: true
+  loan_id:
+    type: string
+    is_chat_input: false
+  customer_name:
+    type: string
+    is_chat_input: false
+outputs:
+  answer:
+    type: string
+    reference: ${chat.output}
+    is_chat_output: true
+nodes:
+- name: loan_lookup
+  type: python
+  source:
+    type: code
+    path: loan_lookup.py
+  inputs:
+    loan_id: ${inputs.loan_id}
+  use_variants: false
+- name: customer_lookup
+  type: python
+  source:
+    type: code
+    path: customer_lookup.py
+  inputs:
+    customer_name: ${inputs.customer_name}
+  use_variants: false
+- name: bank_prompt
+  type: prompt
+  source:
+    type: code
+    path: bank_prompt.jinja2
+  inputs:
+    customerresponse: ${customer_lookup.output}
+    history: ${inputs.chat_history}
+    loanresponse: ${loan_lookup.output}
+  use_variants: false
+- name: chat
+  use_variants: true
+node_variants:
+  chat:
+    default_variant_id: variant_1
+    variants:
+      variant_0:
+        node:
+          name: chat
+          type: llm
+          source:
+            type: code
+            path: chat.jinja2
+          inputs:
+            deployment_name: nh-gpt4-32k
+            temperature: 0.7
+            top_p: 1
+            max_tokens: 256
+            presence_penalty: 0
+            frequency_penalty: 0
+            prompt_text: ${bank_prompt.output}
+            question: ${inputs.question}
+          provider: AzureOpenAI
+          connection: NH AOAI Canada
+          api: chat
+          module: promptflow.tools.aoai
+      variant_1:
+        node:
+          name: chat
+          type: llm
+          source:
+            type: code
+            path: chat__variant_1.jinja2
+          inputs:
+            deployment_name: nh-gpt4-32k
+            temperature: 0.7
+            top_p: 1
+            max_tokens: 256
+            presence_penalty: 0
+            frequency_penalty: 0
+            prompt_text: ${bank_prompt.output}
+            question: ${inputs.question}
+          provider: AzureOpenAI
+          connection: Default_AzureOpenAI
+          api: chat
+          module: promptflow.tools.aoai
+      variant_2:
+        node:
+          name: chat
+          type: llm
+          source:
+            type: code
+            path: chat__variant_2.jinja2
+          inputs:
+            deployment_name: gpt-35-turbo-16k
+            temperature: 0.7
+            top_p: 1
+            max_tokens: 256
+            presence_penalty: 0
+            frequency_penalty: 0
+            prompt_text: ${bank_prompt.output}
+            question: ${inputs.question}
+          provider: AzureOpenAI
+          connection: NH AOAI Canada
+          api: chat
+          module: promptflow.tools.aoai
+environment:
+  python_requirements_txt: requirements.txt

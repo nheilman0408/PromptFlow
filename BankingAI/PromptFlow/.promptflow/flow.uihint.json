@@ -1,0 +1,28 @@
+{
+  "nodes": {
+    "loan_lookup": {
+      "variant_0": {
+        "inputs": {},
+        "inputsValue": {}
+      }
+    },
+    "customer_lookup": {
+      "variant_0": {
+        "inputs": {},
+        "inputsValue": {}
+      }
+    },
+    "bank_prompt": {
+      "variant_0": {
+        "inputs": {},
+        "inputsValue": {}
+      }
+    },
+    "chat": {
+      "variant_1": {
+        "inputs": {},
+        "inputsValue": {}
+      }
+    }
+  }
+}

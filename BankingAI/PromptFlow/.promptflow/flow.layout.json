@@ -1,0 +1,49 @@
+{
+  "orientation": "Vertical",
+  "nodeLayouts": {
+    "inputs": {
+      "x": 78,
+      "y": 62,
+      "index": -1
+    },
+    "outputs": {
+      "x": 22.5,
+      "y": 502,
+      "index": -1
+    },
+    "loan_lookup": {
+      "x": 244,
+      "y": 172,
+      "height": 75,
+      "index": 0
+    },
+    "customer_lookup": {
+      "x": 23,
+      "y": 172,
+      "height": 75,
+      "index": 1
+    },
+    "bank_prompt": {
+      "x": 133,
+      "y": 282,
+      "height": 75,
+      "index": 2
+    },
+    "chat": {
+      "x": 22.5,
+      "y": 392,
+      "height": 75,
+      "index": 3
+    }
+  },
+  "viewport": {
+    "transformMatrix": [
+      1,
+      0,
+      0,
+      1,
+      94.6484375,
+      -97
+    ]
+  }
+}

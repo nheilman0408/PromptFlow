@@ -1,0 +1,59 @@
+{
+  "nodes": {
+    "products": {
+      "variant_0": {
+        "inputs": {
+          "index_type": [
+            {
+              "value": "Registered Index"
+            }
+          ],
+          "acs_content_field": [],
+          "acs_embedding_field": [],
+          "acs_index_name": [],
+          "acs_metadata_field": [],
+          "embedding_type": [],
+          "embedding_deployment": [],
+          "embedding_model": [],
+          "mlindex_asset_id": [
+            {
+              "display_value": "contosotxt:1",
+              "value": "azureml://locations/eastus/workspaces/9bb59072-5add-4b1d-b3c9-8fcfd967757d/data/contosotxt/versions/1"
+            }
+          ],
+          "pinecone_index_connection": [],
+          "pinecone_index_name": [],
+          "semantic_configuration": [],
+          "query_type": [
+            {
+              "display_value": "Hybrid (vector + keyword)",
+              "value": "Hybrid (vector + keyword)"
+            }
+          ]
+        },
+        "inputsValue": {
+          "index_type": "Registered Index",
+          "mlindex_asset_id": "azureml://locations/eastus/workspaces/9bb59072-5add-4b1d-b3c9-8fcfd967757d/data/contosotxt/versions/1"
+        }
+      }
+    },
+    "customer": {
+      "variant_0": {
+        "inputs": {},
+        "inputsValue": {}
+      }
+    },
+    "prompt": {
+      "variant_0": {
+        "inputs": {},
+        "inputsValue": {}
+      }
+    },
+    "chat": {
+      "variant_0": {
+        "inputs": {},
+        "inputsValue": {}
+      }
+    }
+  }
+}
